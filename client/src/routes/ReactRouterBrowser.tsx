@@ -6,7 +6,8 @@ import {
 } from "react-router-dom";
 import MyApp_HomePage from "../pages/homePage/HomePage";
 import MyApp_LoginPage from "../pages/loginPage/LoginPage";
-import PrivateRoutes from "./privateRoutes";
+import MyApp_RegisterPage from "../pages/registerPage/RegisterPage";
+import PrivateRoutes from "./PrivateRoutes";
 
 type Props = {};
 
@@ -23,6 +24,10 @@ const MyApp_ReactRouterBrowser = (props: Props) => {
     {
       path: "/login",
       element: <MyApp_LoginPage />,
+    },
+    {
+      path: "/register",
+      element: <MyApp_RegisterPage />,
     },
   ];
   const router = createBrowserRouter(listRoutes as RouteObject[]);

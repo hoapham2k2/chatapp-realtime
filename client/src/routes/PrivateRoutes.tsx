@@ -6,9 +6,11 @@ type Props = {
 };
 
 const PrivateRoutes = (props: Props): JSX.Element => {
-  const name = localStorage.getItem("name");
+  const currentUser = JSON.parse(
+    localStorage.getItem("chatapp_currentUser") || "{}"
+  );
 
-  if (!name) return <Navigate to="/login" />;
+  if (!currentUser.user) return <Navigate to="/login" />;
 
   return props.children as JSX.Element;
 };
