@@ -1,24 +1,18 @@
 import React from "react";
-import { Link, useHref, useNavigate } from "react-router-dom";
-import { loginUserWithSupabase } from "../../services/userAuthentication";
+import { signUpUserWithSupabase } from "../../services/userAuthentication";
+import { useNavigate } from "react-router-dom";
+
 type Props = {};
 
-const MyApp_LoginPage = (props: Props) => {
+const MyApp_RegisterPage: React.FC = (props: Props) => {
   const [email, setEmail] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const navigate = useNavigate();
-  React.useEffect(() => {
-    const currentUser = JSON.parse(
-      localStorage.getItem("chatapp_currentUser") || "{}"
-    );
-    if (!currentUser.user) navigate("/login");
-  }, []);
-
   const handleOnClick = async (): Promise<void> => {
     if (email === "" || password === "") return;
     setIsLoading(true);
-    await loginUserWithSupabase(email, password).then(() => {
+    await signUpUserWithSupabase(email, password).then(() => {
       setIsLoading(false);
       navigate("/");
     });
@@ -39,8 +33,7 @@ const MyApp_LoginPage = (props: Props) => {
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Enter your password"
           />
-          <button onClick={handleOnClick}>Login</button>
-          <ButtonRegister />
+          <button onClick={handleOnClick}>Register</button>
         </>
       ) : (
         <div>Loading...</div>
@@ -49,14 +42,4 @@ const MyApp_LoginPage = (props: Props) => {
   );
 };
 
-// ButtonRegister to be used in LoginPage in case user doesn't have an account
-const ButtonRegister = (props: Props) => {
-  const navigate = useNavigate();
-  const handleOnClick = () => {
-    // redirect to register page
-    navigate("/register");
-  };
-  return <button onClick={handleOnClick}>Register</button>;
-};
-
-export default MyApp_LoginPage;
+export default MyApp_RegisterPage;
