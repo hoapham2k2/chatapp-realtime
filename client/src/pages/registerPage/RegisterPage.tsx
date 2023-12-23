@@ -1,6 +1,7 @@
 import React from "react";
 import { signUpUserWithSupabase } from "../../services/userAuthentication";
 import { useNavigate } from "react-router-dom";
+import { CircularProgress } from "@chakra-ui/react";
 
 type Props = {};
 
@@ -36,7 +37,7 @@ const MyApp_RegisterPage: React.FC = (props: Props) => {
           <button onClick={handleOnClick}>Register</button>
         </>
       ) : (
-        <div>Loading...</div>
+        <CircularProgress isIndeterminate color="green.300" />
       )}
     </>
   );

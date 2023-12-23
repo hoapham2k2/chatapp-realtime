@@ -1,6 +1,13 @@
 import React from "react";
 import { Link, useHref, useNavigate } from "react-router-dom";
 import { loginUserWithSupabase } from "../../services/userAuthentication";
+import {
+  Button,
+  CircularProgress,
+  FormControl,
+  FormLabel,
+  Input,
+} from "@chakra-ui/react";
 type Props = {};
 
 const MyApp_LoginPage = (props: Props) => {
@@ -26,24 +33,35 @@ const MyApp_LoginPage = (props: Props) => {
   return (
     <>
       {isLoading === false ? (
-        <>
-          <input
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter your email"
-          />
-          <input
-            type="text"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter your password"
-          />
-          <button onClick={handleOnClick}>Login</button>
-          <ButtonRegister />
-        </>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleOnClick();
+          }}
+        >
+          <FormControl isRequired>
+            <FormLabel>Email</FormLabel>
+            <Input
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email"
+            />
+            <FormLabel>Password</FormLabel>
+            <Input
+              type="text"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter your password"
+            />
+            <Button type="submit" onClick={handleOnClick}>
+              Login
+            </Button>
+            <ButtonRegister />
+          </FormControl>
+        </form>
       ) : (
-        <div>Loading...</div>
+        <CircularProgress isIndeterminate color="green.300" />
       )}
     </>
   );
@@ -56,7 +74,7 @@ const ButtonRegister = (props: Props) => {
     // redirect to register page
     navigate("/register");
   };
-  return <button onClick={handleOnClick}>Register</button>;
+  return <Button onClick={handleOnClick}>Register</Button>;
 };
 
 export default MyApp_LoginPage;
